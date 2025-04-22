@@ -24,6 +24,20 @@ public class JogoDaVelha {
         while (jogo.estaEmAndamento()) {
             limparTela();
             mostraMenu(jogo);
+
+            System.out.print(
+                TerminalColors.YELLOW +
+                "Informe sua posição: " +
+                TerminalColors.CYAN +
+                TerminalColors.BOLD);
+
+            try {
+                String posicaoJogador = scanner.nextLine();
+                System.out.println(TerminalColors.RESET);
+                System.out.println(posicaoJogador);
+            } catch (Exception e) {
+                esperar(2000);
+            }
         }
     }
 
@@ -35,26 +49,27 @@ public class JogoDaVelha {
         if (!jogo.estaEmAndamento()) {
             System.out.println(TerminalColors.YELLOW + " 1 - Iniciar\t2 - Sair" + TerminalColors.RESET);
         } else {
-            mostraMapa(jogo);
+            mostraPosicao(jogo);
         }
     }
 
-    public static void mostraMapa(Jogo jogo) {
-        System.out.print(TerminalColors.YELLOW + TerminalColors.BOLD + "Posições:\t" + TerminalColors.RESET);
-        System.out.println(
-            TerminalColors.YELLOW + "[ " +
-            TerminalColors.MAGENTA + "1, 2, 3, 4, 5, 6, 7, 8, 9" +
-            TerminalColors.YELLOW + " ]" + TerminalColors.RESET);
-        
-        System.out.print(TerminalColors.YELLOW + "Mapa:\t" + TerminalColors.RESET);
-        int[] posicoes = jogo.retornaPosicao();
-        for (int i = 0; i < posicoes.length; i++) {
-            System.out.println(posicoes[i]);
-        }
+    public static void mostraPosicao(Jogo jogo) {
+        System.out.println(TerminalColors.YELLOW + TerminalColors.BOLD + "Posições:" + TerminalColors.RESET);
+        System.out.println(TerminalColors.YELLOW + "\t1|2|3");
+        System.out.println("\t-----");
+        System.out.println("\t4|5|6");
+        System.out.println("\t-----");
+        System.out.println("\t7|8|9" + TerminalColors.RESET);
     }
 
     public static void limparTela() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+    public static void esperar(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {}
     }
 }
