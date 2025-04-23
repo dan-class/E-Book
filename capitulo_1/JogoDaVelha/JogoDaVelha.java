@@ -32,9 +32,9 @@ public class JogoDaVelha {
                 TerminalColors.BOLD);
 
             try {
-                String posicaoJogador = scanner.nextLine();
+                String posicaoJogador = scanner.nextLine().trim();
                 System.out.println(TerminalColors.RESET);
-                System.out.println(posicaoJogador);
+                jogo.verificaPosicao(posicaoJogador);
             } catch (Exception e) {
                 esperar(2000);
             }
@@ -60,6 +60,10 @@ public class JogoDaVelha {
         System.out.println("\t4|5|6");
         System.out.println("\t-----");
         System.out.println("\t7|8|9" + TerminalColors.RESET);
+
+        System.out.println(TerminalColors.MAGENTA + TerminalColors.BOLD + "JOGO:" + TerminalColors.RESET);
+
+        jogo.mostraMapaJogo();
     }
 
     public static void limparTela() {
