@@ -1,7 +1,10 @@
+import java.util.Random;
+
 public class Jogo {
     private int scoreJogador = 0;
     private int scoreComputador = 0;
     private boolean emAndamento = false;
+    private final Random random = new Random();
     private int[] posicao = {
         0, 3, 0, 3, 0, 
         2, 2, 2, 2, 2,
@@ -35,49 +38,53 @@ public class Jogo {
     }
 
     public void verificaPosicao(String posicaoJogador) {
-        for (int i = 0; i < posicao.length; i++) {
+        int novaPosicaoJogador = 0;
+        boolean posicaoJogadorValidada = true;
 
-            int novaPosicaoJogador = 0;
+        switch (posicaoJogador) {
+            case "1":
+                novaPosicaoJogador = 0;
+                break;
+            case "2":
+                novaPosicaoJogador = 2;
+                break;
+            case "3":
+                novaPosicaoJogador = 4;
+                break;
+            case "4":
+                novaPosicaoJogador = 10;
+                break;
+            case "5":
+                novaPosicaoJogador = 12;
+                break;
+            case "6":
+                novaPosicaoJogador = 14;
+                break;
+            case "7":
+                novaPosicaoJogador = 20;
+                break;
+            case "8":
+                novaPosicaoJogador = 22;
+                break;
+            case "9":
+                novaPosicaoJogador = 24;
+                break;
+            default:
+                posicaoJogadorValidada = false;
+                System.out.println(TerminalColors.RED + "Posição inválida." + TerminalColors.RESET);
+                esperar(3000);
+        }
 
-            switch (posicaoJogador) {
-                case "1":
-                    novaPosicaoJogador = 0;
-                    break;
-                case "2":
-                    novaPosicaoJogador = 2;
-                    break;
-                case "3":
-                    novaPosicaoJogador = 4;
-                    break;
-                case "4":
-                    novaPosicaoJogador = 10;
-                    break;
-                case "5":
-                    novaPosicaoJogador = 12;
-                    break;
-                case "6":
-                    novaPosicaoJogador = 14;
-                    break;
-                case "7":
-                    novaPosicaoJogador = 20;
-                    break;
-                case "8":
-                    novaPosicaoJogador = 22;
-                    break;
-                case "9":
-                    novaPosicaoJogador = 24;
-                    break;
-                default:
-                    break;
-            }
-
+        if (posicaoJogadorValidada) {
             if (posicao[novaPosicaoJogador] == 0) {
                 posicao[novaPosicaoJogador] = 4;
+                escolhePosicaoComputador();
             } else {
                 System.out.println(
                     TerminalColors.RED +
                     "Posição já está oculpada, escolha outra posição." +
                     TerminalColors.RESET);
+                esperar(3000);
             }
         }
     }
@@ -127,7 +134,43 @@ public class Jogo {
     }
 
     public void escolhePosicaoComputador() {
-        // TODO: fazer a lógica de escolha da posição do computador
+        int[] posicoesPossiveis = {0, 2, 4, 10, 12, 14, 20, 22, 24};
+        boolean procurandoPosicao = true;
+
+        while (procurandoPosicao) {
+            int posicaoSorteada = random.nextInt(9);
+            int posicaoComputador = posicoesPossiveis[posicaoSorteada];
+
+            if (posicao[posicaoComputador] == 0) {
+                posicao[posicaoComputador] = 1;
+                procurandoPosicao = false;
+            }
+        }
     }
 
+    public void verificaVencedor() {
+        /*
+          Posicoes: 1, 2, 3,  4,  5,  6,  7,  8,  9
+             Index: 0, 2, 4, 10, 12, 14, 20, 22, 24
+
+          Combinações vencedoras:
+            Linhas:
+                - Primeira linha (células 1, 2 e 3) ou (0, 2, e 4)
+                - Segunda linha (células 4, 5 e 6) ou (10, 12 e 14)
+                - Terceira linha (células 7, 8 e 9) ou (20, 22 e 24)
+            Colunas:
+                - Primeira coluna (células 1, 4 e 7) ou (0, 10 e 20)
+                - Segunda coluna (células 2, 5 e 8) ou (2, 12 e 22)
+                - Terceira coluna (células 3, 6 e 9) ou (4, 14 e 24)
+            Diagonais:
+                - Diagonal principal (células 1, 5 e 9) ou (0, 12 e 24)
+                - Diagonal secundária (células 3, 5 e 7) ou (4, 12 e 20)
+         */ 
+    }
+
+    public static void esperar(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {}
+    }
 }
