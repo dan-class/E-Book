@@ -4,6 +4,9 @@ public class Jogo {
     private int scoreJogador = 0;
     private int scoreComputador = 0;
     private boolean emAndamento = false;
+    private boolean jogadorWin = false;
+    private boolean computadorWin = false;
+    private boolean jogadorJogou = false;
     private final Random random = new Random();
     private int[] posicao = {
         0, 3, 0, 3, 0, 
@@ -15,6 +18,14 @@ public class Jogo {
 
     public boolean estaEmAndamento() {
         return emAndamento;
+    }
+
+    public boolean retornaJogadorJogou() {
+        return jogadorJogou;
+    }
+
+    public void resetaVezJogador() {
+        jogadorJogou = false;
     }
 
     public void iniciar() {
@@ -35,6 +46,14 @@ public class Jogo {
 
     public int retornaScoreComputador() {
         return scoreComputador;
+    }
+
+    public boolean retornaJogadorWin() {
+        return jogadorWin;
+    }
+
+    public boolean retornaComputadorWin() {
+        return computadorWin;
     }
 
     public void verificaPosicao(String posicaoJogador) {
@@ -78,7 +97,7 @@ public class Jogo {
         if (posicaoJogadorValidada) {
             if (posicao[novaPosicaoJogador] == 0) {
                 posicao[novaPosicaoJogador] = 4;
-                escolhePosicaoComputador();
+                jogadorJogou = true;
             } else {
                 System.out.println(
                     TerminalColors.RED +
@@ -165,7 +184,45 @@ public class Jogo {
             Diagonais:
                 - Diagonal principal (células 1, 5 e 9) ou (0, 12 e 24)
                 - Diagonal secundária (células 3, 5 e 7) ou (4, 12 e 20)
-         */ 
+            
+            Número jogador: 4
+            Número computador: 1
+         */
+        if (posicao[0] == 4 && posicao[2] == 4 && posicao[4] == 4) {
+            jogadorWin = true;
+        } else if (posicao[10] == 4 && posicao[12] == 4 && posicao[14] == 4) {
+            jogadorWin = true;
+        } else if (posicao[20] == 4 && posicao[22] == 4 && posicao[24] == 4) {
+            jogadorWin = true;
+        } else if (posicao[0] == 4 && posicao[10] == 4 && posicao[20] == 4) {
+            jogadorWin = true;
+        } else if (posicao[2] == 4 && posicao[12] == 4 && posicao[22] == 4) {
+            jogadorWin = true;
+        } else if (posicao[4] == 4 && posicao[14] == 4 && posicao[24] == 4) {
+            jogadorWin = true;
+        } else if (posicao[0] == 4 && posicao[12] == 4 && posicao[24] == 4) {
+            jogadorWin = true;
+        } else if (posicao[4] == 4 && posicao[12] == 4 && posicao[20] == 4) {
+            jogadorWin = true;
+        }
+
+        if (posicao[0] == 1 && posicao[2] == 1 && posicao[4] == 1) {
+            computadorWin = true;
+        } else if (posicao[10] == 1 && posicao[12] == 1 && posicao[14] == 1) {
+            computadorWin = true;
+        } else if (posicao[20] == 1 && posicao[22] == 1 && posicao[24] == 1) {
+            computadorWin = true;
+        } else if (posicao[0] == 1 && posicao[10] == 1 && posicao[20] == 1) {
+            computadorWin = true;
+        } else if (posicao[2] == 1 && posicao[12] == 1 && posicao[22] == 1) {
+            computadorWin = true;
+        } else if (posicao[4] == 1 && posicao[14] == 1 && posicao[24] == 1) {
+            computadorWin = true;
+        } else if (posicao[0] == 1 && posicao[12] == 1 && posicao[24] == 1) {
+            computadorWin = true;
+        } else if (posicao[4] == 1 && posicao[12] == 1 && posicao[20] == 1) {
+            computadorWin = true;
+        }
     }
 
     public static void esperar(int ms) {

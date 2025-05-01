@@ -25,6 +25,18 @@ public class JogoDaVelha {
             limparTela();
             mostraMenu(jogo);
 
+            jogo.verificaVencedor();
+            
+            if (jogo.retornaJogadorWin()) {
+                System.out.println(TerminalColors.GREEN + TerminalColors.BOLD + "JOGADOR WIN!" + TerminalColors.RESET);
+                System.exit(0);
+            }
+
+            if (jogo.retornaComputadorWin()) {
+                System.out.println(TerminalColors.RED + TerminalColors.BOLD + "COMPUTADOR WIN!" + TerminalColors.RESET);
+                System.exit(0);
+            }
+
             System.out.print(
                 TerminalColors.YELLOW +
                 "Informe sua posição: " +
@@ -37,6 +49,11 @@ public class JogoDaVelha {
                 jogo.verificaPosicao(posicaoJogador);
             } catch (Exception e) {
                 esperar(2000);
+            }
+
+            if (jogo.retornaJogadorJogou()) {
+                jogo.escolhePosicaoComputador();
+                jogo.resetaVezJogador();
             }
         }
     }
